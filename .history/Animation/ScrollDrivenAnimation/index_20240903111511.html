@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../assets/styles/reset.css">
+    <link rel="stylesheet" href="../../assets/styles/font.css">
+    <style>
+        body{
+            position:relative;
+            background-color: #000;
+        }
+        body::-webkit-scrollbar{
+            /* width:0px; */
+        }
+        .progress-bar{
+            height:2vmin;
+            width:20%;
+            background-color: rgb(164, 23, 23);
+            position:fixed;
+            top:0;
+            left:0;
+        }
+        .kanban{
+            height:100vh;
+            width:100%;
+            display: grid;
+            place-items: center;
+            font-size:10vmin;
+            font-family:Xiang Cui;
+            color:red;
+        }
+        @keyframes killer-show{
+            0%{
+                filter:hue-rotate(0deg);
+                clip-path: inset(20% 45% 20% 45%);
+            }
+            100%{
+                filter:hue-rotate(360deg);
+                clip-path: inset(0% 0% 0% 0%);
+
+            }
+        }
+        .kanban-img{
+            width:100%;
+            /* height:100vh; */
+            height:60vh;
+            object-fit: contain;
+            animation: killer-show ease-in forwards;
+            animation-timeline: view(0% 0%);
+        }
+        @keyframes word-color{
+            0%{
+                filter:hue-rotate(0deg);
+            }
+            100%{
+                filter:hue-rotate(360deg);
+            }
+        }
+        @keyframes word-shake{
+            0%{
+                transform: translate(-10px, -1px);
+            }
+            100%{
+                transform: translate(1px, 1px);
+            }
+        }
+        .kanban-word{
+            transform: translateY(-100%);
+            /* animation: word-color 1s linear infinite;    */
+        }
+        .kanban-word span{
+            animation: word-shake 0.5s linear infinite;   
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar"></div>
+    <div class="kanban">给你一个忠告</div>
+    <div class="kanban">不要下拉</div>
+    <div class="kanban">现在回头还来得及</div>
+    <div class="kanban">不要下拉</div>
+    <div class="kanban">你会为此付出代价的</div>
+    <div class="kanban">不要下拉</div>
+    <div class="kanban">快回去</div>
+    <div class="kanban">快回去快回去快回去</div>
+    <div class="kanban">快回去快回去快回去<br/>快回去快回去快回去</div>
+    <div class="kanban">快回去快回去快回去<br/>快回去快回去快回去<br/>快回去快回去快回去<br/>快回去快回去快回去</div>
+    <div class="kanban">。。。</div>
+    <div class="kanban">。。。。。。</div>
+    <div class="kanban">为什么不听劝呢</div>
+    <div class="kanban">已经迟了</div>
+    <div class="kanban">现在</div>
+    <div class="kanban">我只能告诉你</div>
+    <div class="kanban">千万别回头</div>
+    <div class="kanban">
+        <img class="kanban-img" src="../../assets/img/土耳其杀手哥.png" alt="">
+        <div class="kanban-word">
+            <span>你</span>
+            <span>已</span>
+            <span>经</span></span>
+            <span>死</span></span>
+            <span>了</span></span>
+        </div>
+    </div>
+</body>
+</html>

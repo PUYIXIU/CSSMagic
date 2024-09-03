@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../assets/styles/reset.css">
+    <link rel="stylesheet" href="../../assets/styles/font.css">
+    <style>
+        :root{
+            --bar-height:100px;
+            --scrollbar-w:10px;
+        }
+        body{
+            position:relative;
+            overflow-y:hidden;
+        }
+        body::-webkit-scrollbar{
+            height:var(--scrollbar-w);
+        }
+        body::-webkit-scrollbar-track{
+            background-color: aqua;
+        }
+        body::-webkit-scrollbar-thumb{
+            background-color: rgb(52, 172, 172);
+            border-radius: 10px;
+        }
+        .progress{
+            width:100%;
+            height:var(--bar-height);
+            background-color: red;
+            position:fixed;
+            top:0;
+            left:0;
+        }
+        .main-box{
+            width:fit-content;
+            display: flex;
+            padding-top:var(--bar-height);
+        }
+        .kanban{
+            width:100vw;
+            height:calc(100vh - var(--bar-height) - var(--scrollbar-w));
+            display: grid;
+            place-items: center;
+            font-size: 10vmin;
+            font-family: Uranus Pixel;
+            background-color: rgb(79, 79, 57);
+        }
+        .kanban:nth-child(2n){
+            background-color: yellow;
+        }
+    </style>
+</head>
+<body>
+    <div class="progress"></div>
+    <div class="main-box">
+        <div class="kanban">月曜日💀</div>
+        <div class="kanban">火曜日😨</div>
+        <div class="kanban">水曜日🥴</div>
+        <div class="kanban">木曜日😣</div>
+        <div class="kanban">金曜日😏</div>
+        <div class="kanban">土曜日😇</div>
+        <div class="kanban">日曜日😦</div>
+    </div>
+</body>
+</html>

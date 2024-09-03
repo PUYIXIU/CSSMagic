@@ -1,0 +1,18 @@
+@font-face{
+    font-family: 'Xiang Cui';
+    font-style: light;
+    font-display: swap;
+    src:url(../fonts/香萃打字机体\ W15.ttf);
+}
+@font-face{
+    font-family: 'Xiang Cui';
+    font-style: normal;
+    font-display: swap;
+    src:url(../fonts/香萃打字机体\ W35.ttf);
+}
+@font-face{
+    font-family: 'Xiang Cui';
+    font-style: bold;
+    font-display: swap;
+    src:url(../fonts/香萃打字机体\ W40.ttf);
+}

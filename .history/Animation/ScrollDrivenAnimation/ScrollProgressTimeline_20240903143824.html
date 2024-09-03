@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../assets/styles/reset.css">
+    <link rel="stylesheet" href="../../assets/styles/font.css">
+    <style>
+        :root{
+            --bar-height:40px;
+            --scrollbar-w:10px;
+        }
+        body{
+            position:relative;
+            overflow-y:hidden;
+        }
+        body::-webkit-scrollbar{
+            height:var(--scrollbar-w);
+        }
+        body::-webkit-scrollbar-track{
+            background-color: rgb(126, 194, 204);
+        }
+        body::-webkit-scrollbar-thumb{
+            cursor: pointer;
+            background-color: rgb(58, 123, 123);
+            border-radius: 10px;
+        }
+        @keyframes progress-grow{
+            0%{
+                width:0vw;
+            }
+            100%{
+                width:100vw;
+            }
+        }
+        .progress{
+            width:0%;
+            height:var(--bar-height);
+            background:repeating-linear-gradient(
+                45deg,#fff 0px,#fff 8px,rgb(255, 53, 53) 5px,rgb(255, 53, 53) 20px
+            );
+            border-top-right-radius: 20px;
+            border-bottom-right-radius: 20px;
+            position:fixed;
+            top:0;
+            left:0;
+            animation:progress-grow forwards linear;
+            animation-timeline: scroll(root inline);
+        }
+        @keyframes progress-sign-change{
+            0%{
+                content:"🌙"
+            }
+            14%{
+                content:"🔥"
+            }
+            28%{
+                content:"💧"
+            }
+            42%{
+                content:"🌲"
+            }
+            57%{
+                content:"💰"
+            }
+            71%{
+                content:"💧"
+            }
+            86%,100%{
+                content:"☀️"
+            }
+        }
+        .progress::after{
+            content:"🌙";
+            position:absolute;
+            right:0;
+            font-size:30px;
+            animation:progress-sign-change forwards linear;
+            animation-timeline: scroll(root inline);
+        }
+        .main-box{
+            width:fit-content;
+            display: flex;
+            padding-top:var(--bar-height);
+            scroll-timeline-name: --main-scroller;
+            scroll-timeline-axis:inline;
+        }
+        .kanban{
+            box-sizing: border-box;
+            border:20px solid #fff;
+            border-top:10px solid #fff;
+            width:100vw;
+            height:calc(100vh - var(--bar-height) - var(--scrollbar-w));
+            display: grid;
+            place-items: center;
+            font-size: 10vmin;
+            font-family: Uranus Pixel;
+            background-color: rgb(255, 231, 166);
+        }
+        .kanban:nth-child(2n){
+            background-color: rgb(255, 255, 211);
+        }
+    </style>
+</head>
+<body>
+    <div class="progress"></div>
+    <div class="main-box">
+        <div class="kanban">月曜日💀</div>
+        <div class="kanban">火曜日😨</div>
+        <div class="kanban">水曜日🥴</div>
+        <div class="kanban">木曜日😣</div>
+        <div class="kanban">金曜日😏</div>
+        <div class="kanban">土曜日😇</div>
+        <div class="kanban">日曜日😦</div>
+    </div>
+</body>
+</html>

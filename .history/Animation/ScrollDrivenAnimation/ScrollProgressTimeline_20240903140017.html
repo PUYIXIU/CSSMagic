@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../assets/styles/reset.css">
+    <link rel="stylesheet" href="../../assets/styles/font.css">
+    <style>
+        :root{
+            --bar-height:100px;
+            --scrollbar-w:5px;
+        }
+        body{
+            position:relative;
+            overflow: hidden;
+        }
+        .progress{
+            width:100%;
+            height:var(--bar-height);
+            background-color: red;
+            position:fixed;
+            top:0;
+            left:0;
+        }
+        .main-box{
+            width:fit-content;
+            display: flex;
+            padding-top:var(--bar-height);
+            overflow-x:scroll;
+        }
+        .kanban{
+            width:100vw;
+            height:calc(100vh - var(--bar-height));
+            background-color: yellow;
+        }
+    </style>
+</head>
+<body>
+    <div class="progress"></div>
+    <div class="main-box">
+        <div class="kanban">月曜日💀</div>
+        <div class="kanban">火曜日😨</div>
+        <div class="kanban">水曜日🥴</div>
+        <div class="kanban">木曜日😣</div>
+        <div class="kanban">金曜日😏</div>
+        <div class="kanban">土曜日😇</div>
+        <div class="kanban">日曜日😦</div>
+    </div>
+</body>
+</html>
