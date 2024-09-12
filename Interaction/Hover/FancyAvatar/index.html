@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        @property --a {
+            syntax: "<angle>";
+            inherits: true;
+            initial-value: 0deg;
+        }
+        .box{
+            --r: 30px;
+            --s: 80px;
+            --a: 20deg;
+            position:relative;
+            z-index:0;
+            cursor:pointer;
+            transition: .4s --a;
+            color: #fff;
+            font-family: system-ui, sans-serif;
+            text-align:center;
+            animation: --a .8s backwards cubic-bezier(0,.6,.6,1.5) .7s;
+        }
+        .box:hover{
+            --a:35deg;
+        }
+        @keyframes --a{
+            0%{--a: 90deg}
+        }
+        .box img{
+            height: calc(2*var(--s));
+            aspect-ratio: 1;
+            scale: .9;
+            translate: 0 calc(-1*sin(var(--a))*var(--s) - sin(var(--a))*var(--r));
+            border-radius:50%;
+            animation: t linear both .7s;
+        }
+        @keyframes t{
+            0%{transform: translate(0, -200px)}
+        }
+        .box:before{
+            content:"";
+            position:absolute;
+            z-index:-1;
+            inset: calc(var(--s)/2 + var(--r)/4) 0 0 0;
+            background:linear-gradient(45deg,#00a0b0,#88a65e);
+            --_m:0/calc(2*var(--r)) calc(2*var(--r)) no-repeat
+                    radial-gradient(50% 50%,#000 calc(100% - 1px),#0000);
+            --_d:(var(--s) + var(--r))*cos(var(--a));
+            /* 核心圆环代码 */
+            mask:
+                calc(50% + var(--_d)) var(--_m),calc(50% - var(--_d)) var(--_m),
+                radial-gradient(var(--s) at 50% calc(-1*sin(var(--a))*var(--s)),
+                  #0000 100%,#000 calc(100% + 1px)) 0 calc(var(--r)*(1 - sin(var(--a)))) no-repeat,
+                linear-gradient(90deg,#000 calc(50% - var(--_d)),#0000 0 calc(50% + var(--_d)),#000 0);
+        }
+        
+        body {
+          margin: 0;  
+          background: repeating-linear-gradient(-45deg, #fff 0 20px, #ddd 0 40px);
+          padding-top: 100px;
+        }
+        
+        h2 {
+          margin-block: calc(var(--s)/-3) 0;
+          font-size: 3rem
+        }
+        p {
+          font-size: 1.5rem;
+          margin: 0;
+          padding: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- 原站点 https://codepen.io/t_afif/pen/LYKqQVP?editors=1100 -->
+    <div class="box">
+        <img src="../../../assets/img/E-Duck.png" alt="">
+        <h2>Electric Duck</h2>
+        <p>Just Want Quite</p>
+    </div> 
+</body>
+</html>
