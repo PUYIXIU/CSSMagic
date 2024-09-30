@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400">
+    <style>
+        *{
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+          font-family: "Open Sans", sans-serif
+        }
+        body{
+            height:100vh;
+            display: grid;
+            place-items:center;
+        }
+        .type-js{
+            font-size:32px;
+            text-align: center;
+            position:relative;
+        }
+        .text-js{
+            /* opacity: 0; */
+            letter-spacing: 1.6px;
+            font-weight: 300;
+        }
+        .cursor{
+            display: block;
+            position:absolute;
+            height:100%;
+            top:0;
+            right: -5px;
+            width: 2px;
+            background-color:#000;
+            z-index:1;
+            animation: flash 0.5s none infinite alternate;
+        }
+        @keyframes flash{
+            0%{
+                opacity: 1;
+            }
+            100%{
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="type-js healine">
+        <h1 class="text-js">Typing Somthing</h1>
+        <div class="cursor"></div>
+    </div>
+    
+    <script type="text/javascript">
+        function autoType(elementClass, typingSpeed){
+            // 获取文字容器
+            // 容器后添加光标
+            // 提取出文字
+            // 
+            let thisDom = document.querySelector(elementClass)
+            let text = thisDom.innerText
+            let typing = ''
+            setTimeout(()=>{
+                for(let i = 0; i< text.length; i++){
+                    setTimeout(function(){
+                        typing += text[i]
+                        thisDom.innerText = typing
+                    }, i * typingSpeed)
+                }
+            })
+        }
+        autoType('.text-js', 100)
+    </script>
+</body>
+</html>

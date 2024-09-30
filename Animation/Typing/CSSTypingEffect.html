@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .wrapper{
+            height:100vh;
+            display: grid;
+            place-items:center;
+        }
+        .typing-demo{
+            /* 
+            ch： 数字0的宽度
+            em：定义字体标准大小
+            ch：以当前字体中0为标准尺寸
+             */
+            /* width:22ch; */
+            width:10ch;
+            animation:
+                typing 2s steps(5),
+                blink .5s step-end infinite alternate;
+            white-space: nowrap;
+            overflow: hidden;
+            border-right: 3px solid;
+            font-family: monospace;
+            font-size: 2em;
+
+            
+
+        }
+        @keyframes typing {
+            from {
+                width:0;
+            }
+        }
+        @keyframes blink{
+            50%{
+                border-color:transparent;
+            }
+        }
+    </style>
+</head>
+<!-- https://codepen.io/denic/pen/GRoOxbM -->
+<body>
+    <div class="wrapper">
+        <div class="typing-demo">
+            打出这行字
+        </div>
+    </div>
+</body>
+</html>

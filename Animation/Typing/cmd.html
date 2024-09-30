@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            background-color:#000;
+            padding: 1%;
+            color:#ccc;
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-size: 1em;
+        }
+        .console{
+            font-family: "Lucida Sans Typewriter", "Lucida Console", Monaco, "Bitstream Vera Sans Mono", monospace;
+        }
+        input[type="button"]{
+            cursor: pointer;
+        }
+        #cursor{
+            margin-left:-1ch;
+        }
+        #cursor.blink{
+            animation: blink 0.6s ease-in infinite;
+        }
+        @keyframes blink{
+            0%{
+                opacity: 1;
+            }
+            40%{
+                opacity: 1;
+            }
+            60%{
+                opacity: 0;
+            }
+            100%{
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <p>
+        <input type="text" id="test-caption" value="Three Rules in Fight Club."/>
+        <input type="button" id="test-typing" value="Test Typing Effect"/>
+        <input type="button" id="test-erasing" value="Test Erasing Effect"/>
+    </p>
+    <p class="console">
+        <span>C:\</span>
+        <span id="caption"></span>
+        <span id="cursor" class="blink">|</span>
+    </p>
+    <script>
+        const typingSpeed = 50, erasingSpeed = 25
+        let captionLength = 0
+        const typingInput = document.querySelector("#test-caption")
+        const typingBtn = document.querySelector("#test-typing")
+        const erasingBtn = document.querySelector("#test-erasing")
+        const caption = document.querySelector("#caption")
+        const cursor = document.querySelector("#cursor")
+        let captionText = ""
+        window.onload = () => {
+            typingBtn.addEventListener('click', typing)
+            erasingBtn.addEventListener('click', erasing)
+        }
+
+        function btnControl(enable){
+            let fun = enable?'removeAttribute':'setAttribute'
+            typingBtn[fun]('disabled',undefined)
+            erasingBtn[fun]('disabled',undefined)
+        }
+
+        // 打字
+        function typing(){
+            captionText = typingInput.value
+            if(captionText.length<=0 ) return
+            btnControl(false)
+            caption.innerHTML = ""
+            let curText = ""
+            cursor.classList.remove('blink')
+            Array.from(captionText).forEach((ch,index)=>{
+                setTimeout(()=>{
+                    curText += ch
+                    caption.innerHTML = curText
+                    if(index == captionText.length - 1){
+                        btnControl(true)
+                        cursor.classList.add('blink')
+                    }
+                }, index*typingSpeed)
+
+            })
+        }
+
+        // 回退
+        function erasing(){
+            if( captionText.length<=0 ) return
+            btnControl(false)
+            cursor.classList.remove('blink')
+            for(let i = captionText.length -1 ; i >= 0; i--){
+                let curText = captionText.slice(0, i) 
+                console.log(i, curText)
+                setTimeout(()=>{
+                    caption.innerHTML = curText
+                    if(i == 0){
+                        btnControl(true)
+                        cursor.classList.add('blink')
+                        captionText = ''
+                    }
+                },(captionText.length - i)*erasingSpeed)
+            }
+        }
+    </script>
+</body>
+</html>
