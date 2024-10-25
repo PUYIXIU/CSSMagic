@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=320.1,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=yes,minimal-ui" />
+
+    <title>Document</title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            background-repeat: no-repeat;
+            background-size:cover;
+        }
+        body{
+            width:100vw;
+            height:100vh;
+            position:relative;
+            overflow:hidden;
+            display: grid;
+            place-items: center;
+        }
+        .background-image{
+            position:absolute;
+            top:0;
+            left:0;
+            z-index:0;
+            width:120%;
+            height:120%;
+            background-image: url(./mountains.jpg);
+        }
+        .title{
+            color:rgb(243, 243, 243);
+            z-index:1;
+            font-size:50px;
+        }
+    </style>
+</head>
+<body>
+    <div class="background-image"></div>
+    <h1 class="title">
+        Hello World</h1>
+    <script>
+        const bg = document.querySelector('.background-image')
+
+        let mouse_endX = 0, mouse_endY = 0
+        let mouse_x = 0, mouse_y = 0
+        let delay = 10
+        bg.addEventListener('mousemove', e=>{
+            // 将鼠标移动的绝对距离由 [0, 1] 映射到 [0, 10] 上
+            mouse_endX = e.clientX / window.innerWidth * 10
+            mouse_endY = e.clientY / window.innerHeight * 10
+        })
+        // 跟随效果
+        function updateBackPosition(){
+            mouse_x += (mouse_endX - mouse_x) / delay
+            mouse_y += (mouse_endY - mouse_y) / delay
+            bg.style.transform = `translate3d(${-mouse_x}%, ${-mouse_y}%, 0)`
+            requestAnimationFrame(updateBackPosition)
+        }
+        async function toggleFullscreen(){
+            if(document.fullscreen){
+                document.exitFullscreen()
+            } else{
+                document.body.requestFullscreen({navigationUI:'show'}).then(res=>{
+                    res()
+                }).catch(err=>{
+                    console.log(err)
+                })
+            }
+        }
+        document.querySelector('.title').onclick=toggleFullscreen
+        updateBackPosition()
+        document.body.onload = e=>{
+            setTimeout(()=>{
+                document.querySelector('.title').onclick()
+            })
+        }
+        document.onkeydown = e=>{
+            if(e.key == 'w'){
+                document.querySelector('.title').onclick()
+            }
+        }
+
+    </script>
+</body>
+</html>

@@ -18,7 +18,9 @@
 <body>
     <canvas id="canvas" width="400" height="300"></canvas>
     <script>
-        // 控制动画步数的
+        /**
+         * 主要功能是对浏览器前缀进行兼容
+         */
         (function(){
             var lastTime = 0
             var vendors = ['webkit', 'moz']
@@ -43,7 +45,7 @@
                 };
         }())
 
-        // 
+        // 矩阵主体
         function Matrix(canvas){
             this.intervalId = 0
             this.canvas = canvas;
@@ -57,7 +59,6 @@
             this.yTimes = []
             this.lastChars = []
 
-            //
             for(var i = 0; i < this.width / 10; i++){
                 this.yPositions[i] = Math.random() * (this.height / 10)
                 this.ySpeeds[i] = (Math.random() + 0.3) * 0.5
@@ -108,6 +109,7 @@
                 this.yTimes[x] += this.ySpeeds[x]
             }
         }
+        // 启动方法
         Matrix.prototype.Start = function(){
             this.Draw()
         }

@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../../assets/styles/reset.css">
+    <style>
+        *{
+        }
+        body{
+            width:50vw;
+            height:50vh;
+            overflow:hidden;
+            position:relative;
+            cursor:none
+        }
+        :root{
+            --primary:#00ff2a;
+        }
+        .page-wrapper{
+            width:100%;
+            height:100%;
+            background:#000;
+            display: grid;
+            place-items: center;
+        }
+        .href-list{
+            display: flex;
+            flex-direction: column;
+            gap:50px;
+        }
+        .href-list li a{
+            font-size:20px;
+            color:#fff;
+            font-weight: bold;
+            user-select: none;
+
+        }
+        .cursor-dot-outline,.cursor-dot{
+            position:absolute;
+            pointer-events: none;
+            top:0;
+            left:0;
+            border-radius:50%;
+            transform:translate(-50%, -50%);
+            opacity: 0;
+            transition:
+                transform 0.3s ease-in-out,
+                opacity 0.3s ease-in-out;
+        }
+        .cursor-dot-outline{
+            width:50px;
+            height: 50px;
+            background:rgb(from var(--primary) r g b / 0.2);
+        }
+        .cursor-dot{
+            width:8px;
+            height:8px;
+            background:var(--primary);
+        }
+    </style>
+</head>
+<body class="body-content">
+    <div class="page-wrapper">
+        <ul class="href-list">
+            <li><a href="#">Go to Shanghai</a></li>
+            <li><a href="#">Go to Tokyo</a></li>
+            <li><a href="#">Go to Baris</a></li>
+            <li><a href="#">Go to Lonton</a></li>
+            <li><a href="#">Go to Berlin</a></li>
+        </ul>
+    </div>
+    <div class="cursor-dot-outline"></div>
+    <div class="cursor-dot"></div>
+
+    <script>    
+        class Cursor{
+            /**
+             * contentDom 容器dom
+             * dotDom 焦点dom
+             * outlineDom 轮廓dom
+             */
+            constructor(contentDom, dotDom, outlineDom){
+                /**
+                  * _x 轮廓圆的x坐标
+                  */
+                this. _x = 0
+                /**
+                 * _y 轮廓圆的y坐标
+                 */
+                this._y = 0
+                /**
+                 * endX 鼠标焦点的x坐标
+                 */
+                this.endX = window.innerWidth / 2
+                /**
+                 * endY 鼠标焦点的y坐标
+                 */
+                this.endY = window.innerHeight / 2
+                /**
+                 * delay 延迟的步数
+                 */
+                this.delay = 8
+                /**
+                 * cursorVisible 自定义光标可见度
+                 */
+                this.cursorVisible = true
+                /**
+                 * cursorEnlarged 自定义光标是否放大
+                 */
+                this.cursorEnlarged = false;
+                /**
+                 * $content 鼠标容器dom
+                 */
+                this.$content = contentDom
+                /**
+                 * $dot 焦点dom
+                 */
+                this.$dot = dotDom
+                /**
+                 * $outline 外轮廓dom
+                 */
+                this.$outline = outlineDom
+                /**
+                 * dotSize 焦点宽度
+                 */
+                this.dotSize = dotDom.offsetWidth
+                /**
+                 * outlineSize 外轮廓宽度
+                 */
+                this.outlineSize = outlineDom.offsetWidth
+
+                this.setupEventListeners()
+                this.updateOutlineDot()
+            }
+            /**
+             * 绑定注册事件
+             */
+            setupEventListeners(){
+                this.$content.querySelectorAll("a").forEach(el=>{
+                    el.addEventListener('mouseover', ()=>{
+                        this.cursorEnlarged = true
+                        this.toggleCursorSize()
+                    })
+                    el.addEventListener('mouseout',()=>{
+                        this.cursorEnlarged = false
+                        this.toggleCursorSize()
+                    })
+                })
+                this.$content.addEventListener("mousedown",()=>{
+                    this.cursorEnlarged = true
+                    this.toggleCursorSize()
+                })
+                this.$content.addEventListener("mouseup",()=>{
+                    this.cursorEnlarged = false
+                    this.toggleCursorSize()
+                })
+                this.$content.addEventListener("mouseenter",()=>{
+                    this.cursorVisible = true
+                    this.toggleCursorVisibility()
+                })
+                this.$content.addEventListener("mouseleave",()=>{
+                    this.cursorVisible = false
+                    this.toggleCursorVisibility()
+                })
+                this.$content.addEventListener("mousemove",e=>{
+                    const rect = e.target.getBoundingClientRect()
+                    this.endX = rect.left + e.offsetX
+                    this.endY = rect.top + e.offsetY
+                    // console.log(`RectLeft=${rect.left} RectTop=${rect.top} OffsetX=${e.offsetX} OffsetY=${e.offsetY}`)
+                    this.$dot.style.top = `${this.endY}px`
+                    this.$dot.style.left = `${this.endX}px`
+                })
+            }
+            /**
+             * 更新OutlineDot的位置
+             */
+             updateOutlineDot(){
+                this._x += (this.endX - this._x) / this.delay
+                this._y += (this.endY - this._y) / this.delay
+                this.$outline.style.top = `${this._y}px`
+                this.$outline.style.left = `${this._x}px`
+                requestAnimationFrame(this.updateOutlineDot.bind(this))
+            }
+            /**
+             * 切换cursor的尺寸
+             */
+            toggleCursorSize(){
+                if(this.cursorEnlarged){
+                    this.$dot.style.transform = `translate(-50%, -50%) scale(0.7)`
+                    this.$outline.style.transform = `translate(-50%, -50%) scale(1.5)`
+                }else{
+                    this.$dot.style.transform = `translate(-50%, -50%) scale(1)`
+                    this.$outline.style.transform = `translate(-50%, -50%) scale(1)`
+                }
+            }
+            /**
+             * 切换cursor的显隐
+             */
+            toggleCursorVisibility(){
+                if(this.cursorVisible){
+                    this.$dot.style.opacity = '1'
+                    this.$outline.style.opacity = '1'
+                }else{
+                    this.$dot.style.opacity = '0'
+                    this.$outline.style.opacity = '0'
+                }
+            }
+        }
+        const cursor = new Cursor(
+            document.querySelector('.body-content'),
+            document.querySelector('.cursor-dot'),
+            document.querySelector('.cursor-dot-outline'),
+        )
+    </script>
+</body>
+</html>
